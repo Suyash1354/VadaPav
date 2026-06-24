@@ -209,11 +209,6 @@ const Home = () => {
                 Crispy potato filling wrapped in golden besan batter.
               </h1>
             </div>
-
-            
-              <h1 className=" absolute bottom-0 left-1/2 lg:text-[4vw] text-[#F91814] [-webkit-text-stroke:2px_white]">
-              KADAK
-            </h1>
              
 
             <div className="overflow-hidden flex justify-center">
