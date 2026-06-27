@@ -4,25 +4,26 @@ import { useGSAP } from "@gsap/react";
 
 gsap.registerPlugin(useGSAP);
 
-const Home = () => {
+const Home = ({ isLoading }) => {
   const Container = useRef(null);
+  const LogoRef = useRef(null);
   const MoreTextRef = useRef(null);
   const MenuTextRef = useRef(null);
   const TopBunRef = useRef(null);
   const VadaRef = useRef(null);
   const BottomBunRef = useRef(null);
   const VadaPavImageRef = useRef(null);
-  const BhookRef   = useRef(null);
-  
+  const VadaTextRef = useRef(null);
+  const PavTextRef = useRef(null);
+  const BhookRef = useRef(null);
 
-  // MORE
+  // MORE BUTTON HOVERS
   const MoreAnimationRun = () => {
     gsap.to(MoreTextRef.current.querySelectorAll("span"), {
       y: -40,
       duration: 0.8,
       ease: "back.out(2)",
     });
-
     gsap.to(MoreTextRef.current, {
       scale: 1.1,
       duration: 0.8,
@@ -36,7 +37,6 @@ const Home = () => {
       duration: 0.8,
       ease: "back.out(2)",
     });
-
     gsap.to(MoreTextRef.current, {
       scale: 1,
       duration: 0.8,
@@ -44,14 +44,13 @@ const Home = () => {
     });
   };
 
-  // MENU
+  // MENU BUTTON HOVERS
   const MenuAnimationRun = () => {
     gsap.to(MenuTextRef.current.querySelectorAll("span"), {
       y: -40,
       duration: 0.8,
       ease: "back.out(2)",
     });
-
     gsap.to(MenuTextRef.current, {
       scale: 1.1,
       duration: 0.8,
@@ -65,7 +64,6 @@ const Home = () => {
       duration: 0.8,
       ease: "back.out(2)",
     });
-
     gsap.to(MenuTextRef.current, {
       scale: 1,
       duration: 0.8,
@@ -73,11 +71,15 @@ const Home = () => {
     });
   };
 
+  // MAIN INTRO TIMELINE
   useGSAP(
     () => {
+      if (isLoading) return;
+
       const tl = gsap.timeline();
 
-      tl.from([".logo", ".more", ".menu"], {
+      // FIXED: Using array refs instead of raw string selectors to secure target parsing
+      tl.from([LogoRef.current, MoreTextRef.current, MenuTextRef.current], {
         scale: 0,
         duration: 0.8,
         ease: "back.out(1.7)",
@@ -95,11 +97,10 @@ const Home = () => {
         VadaRef.current,
         {
           scale: 0,
-
           duration: 2,
           ease: "back.out",
         },
-        "<",
+        "<"
       );
 
       tl.from(
@@ -110,22 +111,20 @@ const Home = () => {
           duration: 2,
           ease: "back.out",
         },
-        "<",
-      )
-
-        .to(
-          VadaPavImageRef.current,
-          {
-            y: -4,
-            repeat: -1,
-            yoyo: true,
-            ease: "sine.inOut",
-          },
-          "<",
-        );
+        "<"
+      ).to(
+        VadaPavImageRef.current,
+        {
+          y: -4,
+          repeat: -1,
+          yoyo: true,
+          ease: "sine.inOut",
+        },
+        "<"
+      );
 
       tl.from(
-        ".vada-text",
+        VadaTextRef.current,
         {
           scale: 0,
           opacity: 0,
@@ -133,11 +132,11 @@ const Home = () => {
           duration: 1,
           ease: "back.out(2)",
         },
-        "<1",
+        "<1"
       );
 
       tl.from(
-        ".pav-text",
+        PavTextRef.current,
         {
           scale: 0,
           opacity: 0,
@@ -145,7 +144,7 @@ const Home = () => {
           duration: 1,
           ease: "back.out(2)",
         },
-        "<",
+        "<"
       );
 
       tl.from(".bottom-text", {
@@ -155,17 +154,20 @@ const Home = () => {
         duration: 1,
         stagger: 0.25,
         ease: "power4.out",
-      })
+      });
 
-      tl.from(BhookRef.current,{
-        scale:0,
-        y:20,
-        duration:1,
-        ease: "back.out(2)",
-      },"<1")
+      tl.from(
+        BhookRef.current,
+        {
+          scale: 0,
+          y: 20,
+          duration: 1,
+          ease: "back.out(2)",
+        },
+        "<1"
+      );
     },
-
-    { scope: Container },
+    { scope: Container, dependencies: [isLoading] }
   );
 
   return (
@@ -176,12 +178,11 @@ const Home = () => {
       <div className="Container w-full h-screen">
         <div className="Text w-full h-screen">
           <div className="Nav w-full h-26 flex justify-between items-center px-8">
-            <h1 className="logo lg:text-[3.5vw] md:text-[6vw] text-[10vw] font-[Modak-Regular] text-[#F91814] [-webkit-text-stroke:2px_white]">
+            <h1 ref={LogoRef} className="logo lg:text-[3.5vw] md:text-[6vw] text-[10vw] font-[Modak-Regular] text-[#F91814] [-webkit-text-stroke:2px_white]">
               TAPRI
             </h1>
 
             <div className="w-fit flex lg:gap-8 gap-6 items-center font-[Oktabroom]">
-              {/* MORE */}
               <h1
                 ref={MoreTextRef}
                 onMouseEnter={MoreAnimationRun}
@@ -192,7 +193,6 @@ const Home = () => {
                 <span>MORE</span>
               </h1>
 
-              {/* MENU */}
               <h1
                 ref={MenuTextRef}
                 onMouseEnter={MenuAnimationRun}
@@ -207,8 +207,8 @@ const Home = () => {
 
           <div className="CenterText w-full lg:h-fit md:h-80 h-60 flex justify-center items-center">
             <h1 className="text-[22vw] font-[Chadle] text-[#F91814] lg:[-webkit-text-stroke:8px_white] [-webkit-text-stroke:4px_white]">
-              <span className="vada-text inline-block mr-[4vw]">VADA</span>
-              <span className="pav-text inline-block">PAV</span>
+              <span ref={VadaTextRef} className="vada-text inline-block mr-[4vw]">VADA</span>
+              <span ref={PavTextRef} className="pav-text inline-block">PAV</span>
             </h1>
           </div>
 
@@ -219,10 +219,9 @@ const Home = () => {
               </h1>
             </div>
 
-            
-              <h1 ref={BhookRef} className="lg:text-[12vw] md:text-[6vw] text-[10vw] font-[Modak-Regular] text-[#F4A804] [-webkit-text-stroke:6px_white] absolute left-1/2 -bottom-40 -translate-x-1/2 lg:block hidden">BHOOK</h1>
-            
-             
+            <h1 ref={BhookRef} className="lg:text-[12vw] md:text-[6vw] text-[10vw] font-[Modak-Regular] text-[#F4A804] [-webkit-text-stroke:6px_white] absolute left-1/2 -bottom-40 -translate-x-1/2 lg:block hidden">
+              BHOOK
+            </h1>
 
             <div className="overflow-hidden flex justify-center">
               <h1 className="bottom-text text-sm md:text-[3vw] lg:text-2xl lg:w-80 w-[80%] text-center rounded-md p-1">
@@ -231,8 +230,6 @@ const Home = () => {
             </div>
           </div>
         </div>
-
-        
 
         <div
           ref={VadaPavImageRef}
@@ -257,8 +254,6 @@ const Home = () => {
             alt=""
           />
         </div>
-
-        
       </div>
     </section>
   );
