@@ -12,6 +12,8 @@ const Home = () => {
   const VadaRef = useRef(null);
   const BottomBunRef = useRef(null);
   const VadaPavImageRef = useRef(null);
+  const BhookRef   = useRef(null);
+  
 
   // MORE
   const MoreAnimationRun = () => {
@@ -153,7 +155,14 @@ const Home = () => {
         duration: 1,
         stagger: 0.25,
         ease: "power4.out",
-      });
+      })
+
+      tl.from(BhookRef.current,{
+        scale:0,
+        y:20,
+        duration:1,
+        ease: "back.out(2)",
+      },"<1")
     },
 
     { scope: Container },
@@ -203,12 +212,16 @@ const Home = () => {
             </h1>
           </div>
 
-          <div className="absolute  overflow-hidden bottom-8 left-0 w-full lg:h-60 lg:flex lg:flex-row flex flex-col items-center lg:justify-between justify-end gap-3 px-6 lg:px-20 font-[Oktabroom] text-zinc-800">
+          <div className="absolute bottom-8 left-0 w-full lg:h-60 lg:flex lg:flex-row flex flex-col items-center lg:justify-between justify-end gap-3 px-6 lg:px-20 font-[Oktabroom] text-zinc-800">
             <div className="overflow-hidden flex justify-center">
               <h1 className="bottom-text text-sm md:text-[3vw] lg:text-2xl lg:w-80 w-[80%] text-center rounded-md p-1">
                 Crispy potato filling wrapped in golden besan batter.
               </h1>
             </div>
+
+            
+              <h1 ref={BhookRef} className="lg:text-[12vw] md:text-[6vw] text-[10vw] font-[Modak-Regular] text-[#F4A804] [-webkit-text-stroke:6px_white] absolute left-1/2 -bottom-40 -translate-x-1/2 lg:block hidden">BHOOK</h1>
+            
              
 
             <div className="overflow-hidden flex justify-center">
@@ -228,19 +241,19 @@ const Home = () => {
           <img
             ref={TopBunRef}
             className="absolute lg:w-[30vw] w-[60vw] object-cover z-20"
-            src="Images/Home/topbun.png"
+            src="Images/Home/topbun.webp"
             alt=""
           />
           <img
             ref={VadaRef}
             className="absolute lg:w-[30vw] w-[60vw] object-cover z-10"
-            src="Images/Home/Vada.png"
+            src="Images/Home/Vada.webp"
             alt=""
           />
           <img
             ref={BottomBunRef}
             className="absolute lg:w-[30vw] w-[60vw] object-cover z-10"
-            src="Images/Home/bottombun.png"
+            src="Images/Home/bottombun.webp"
             alt=""
           />
         </div>

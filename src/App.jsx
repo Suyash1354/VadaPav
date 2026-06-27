@@ -1,14 +1,54 @@
-import React from 'react'
-import Home from './pages/Home'
-import Journey from './pages/Journey'
+import React, { useEffect, useState } from "react";
+import Home from "./pages/Home";
+import Journey from "./pages/Journey";
+import Types from "./pages/Types";
+import Incredieant from "./pages/Incredieant";
+import Loader from "./components/Loader";
+import gsap from "gsap";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
 
 const App = () => {
-  return (
-    <div className='w-full min-h-screen bg-[#F5E3CD]'>
-      <Home/>
-      <Journey/>
-    </div>
-  )
-}
+  const [isLoading, setIsLoading] = useState(true);
 
-export default App
+  useEffect(() => {
+    const handlePageLoad = () => {
+      // 1. Instantly force the window to the very top before updating state
+      window.scrollTo(0, 0);
+      
+      setIsLoading(false);
+      
+      // 2. Refresh ScrollTrigger calculations after positions stabilize
+      setTimeout(() => {
+        window.scrollTo(0, 0); // Double-check reset for slower rendering browsers
+        ScrollTrigger.refresh();
+      }, 100);
+    };
+
+    if (document.readyState === "complete") {
+      handlePageLoad();
+    } else {
+      window.addEventListener("load", handlePageLoad);
+      return () => window.removeEventListener("load", handlePageLoad);
+    }
+  }, []);
+
+  return (
+    <>
+      <Loader isLoading={isLoading} />
+
+      {/* Main layout container wrapper */}
+      <div 
+        className={`w-full min-h-screen bg-[#F5E3CD] transition-opacity duration-500 ${
+          isLoading ? "opacity-0 pointer-events-none max-h-screen overflow-hidden" : "opacity-100"
+        }`}
+      >
+        <Home />
+        <Types />
+        <Journey />
+        <Incredieant />
+      </div>
+    </>
+  );
+};
+
+export default App;

@@ -1,0 +1,37 @@
+"InstallScript"
+{
+	"Registry"
+	{
+		"HKEY_LOCAL_MACHINE\\Software\\CAPCOM\\RESIDENT EVIL 5"
+		{
+			"string"
+			{
+				"GUID"		"%CDKEY%"
+				"installdir"		"%INSTALLDIR%"
+				"language"		"English"
+			}
+			"dword"
+			{
+				"launch"		"1"
+			}
+		}
+	}
+	"Registry If Not Present"
+	{
+		"HKEY_CURRENT_USER\\Software\\CAPCOM\\RESIDENT EVIL 5"
+		{
+			"string"
+			{
+				"language"		"1033"
+			}
+		}
+	}
+	"Firewall"
+	{
+		"Resident Evil 5"		"%INSTALLDIR%\\Launcher.exe"
+	}
+}
+"kvsignatures"
+{
+	"InstallScript"		"66d8e6eb49f14a803e27e86a128b1057d0ed1fea54cda1376e18160166105d3a7ce878cad2b5e568d7a90a8cc605b0b9f6ed89d1ae130c007bfbfa9e1ea2ccc7037ac877c2327daacfc034f1b2dee8c2827d4f575f759d60be55c00e29ffea1a8f787f76b323ed917f0114b0c4a8a50b3bc1fc6697875469eb7ed16ee9eb1996"
+}

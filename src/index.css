@@ -48,3 +48,7 @@
   font-weight: 700;
   font-style: italic;
 }
+
+body{
+  overflow-x: hidden;
+}
