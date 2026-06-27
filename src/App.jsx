@@ -12,14 +12,11 @@ const App = () => {
 
   useEffect(() => {
     const handlePageLoad = () => {
-      // 1. Instantly force the window to the very top before updating state
       window.scrollTo(0, 0);
-      
       setIsLoading(false);
       
-      // 2. Refresh ScrollTrigger calculations after positions stabilize
       setTimeout(() => {
-        window.scrollTo(0, 0); // Double-check reset for slower rendering browsers
+        window.scrollTo(0, 0);
         ScrollTrigger.refresh();
       }, 100);
     };
@@ -36,13 +33,13 @@ const App = () => {
     <>
       <Loader isLoading={isLoading} />
 
-      {/* Main layout container wrapper */}
       <div 
         className={`w-full min-h-screen bg-[#F5E3CD] transition-opacity duration-500 ${
           isLoading ? "opacity-0 pointer-events-none max-h-screen overflow-hidden" : "opacity-100"
         }`}
       >
-        <Home />
+        {/* Pass isLoading down to prevent the intro from running prematurely */}
+        <Home isLoading={isLoading} />
         <Types />
         <Journey />
         <Incredieant />
