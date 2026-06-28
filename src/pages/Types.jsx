@@ -37,7 +37,7 @@ const Types = () => {
   };
 
   return (
-    <section className="w-full min-h-screen bg-[#F5E3CD] py-12 md:py-20 flex flex-col justify-center items-center overflow-hidden">
+    <section className="w-full min-h-screen bg-[#F5E3CD] py-12 md:py-20 flex flex-col justify-center items-center overflow-hidden mt-40">
       
       {/* TEXT LAYER */}
       <div className="TEXT w-full px-6 flex flex-col items-center font-[Oktabroom] justify-center text-center mb-12 md:mb-20">
